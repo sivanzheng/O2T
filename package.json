@@ -1,0 +1,43 @@
+{
+  "name": "o2t",
+  "version": "1.0.0",
+  "description": "Generate TypeScript interface data type definition files organized by namespaces according to the OpenApi schema exported by Apifox and automatically uploaded to your NPM.",
+  "main": "./lib/index.js",
+  "bin": {
+    "o2t": "./lib/index.js"
+  },
+  "files": [
+    "publish.sh",
+    "install.sh",
+    "lib/**/*"
+  ],
+  "scripts": {
+    "dev": "npm run build && node lib/index.js",
+    "build": "rm -rf lib && mkdir lib && tsc",
+    "ci": "npm run build",
+    "start:docker": "node lib/index.js"
+  },
+  "keywords": [
+    "apifox-cli",
+    "openApi-generator",
+    "typescript-generator",
+    "trie-tree"
+  ],
+  "author": "Sivan Zheng",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "10.17.60",
+    "@types/prettier": "2.3.2",
+    "@typescript-eslint/eslint-plugin": "4.29.2",
+    "@typescript-eslint/parser": "4.29.2",
+    "eslint": "7.32.0"
+  },
+  "dependencies": {
+    "json-schema-to-typescript": "11.0.2",
+    "npm-cli-login": "0.1.1",
+    "prettier": "2.3.2",
+    "promisify-child-process": "4.1.1",
+    "commander": "9.4.0",
+    "typescript": "4.3.5"
+  }
+}

@@ -1,0 +1,5 @@
+export const REGISTRY = ''
+export const USERNAME = ''
+export const PASSWORD = ''
+export const EMAIL = ''
+export const AUTHOR = ''
