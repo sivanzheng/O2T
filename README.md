@@ -51,7 +51,7 @@ Apifox 暂时不支持提供公开 API，目前只提供本地启动 Apifox ，�
 
 ## 实现
 
-具体实现和底层算法与 Y2T 服务，使用 Tire 实现，可以参考 Y2T 的 [README.md](https://github.com/ShiverZheng/Y2T#y2t)。
+具体实现和底层算法与 Y2T 相似，使用 Tire 实现，可以参考 Y2T 的 [README.md](https://github.com/ShiverZheng/Y2T#y2t)。
 
 Apifox 提供的数据定义大致如下：
 ```typescript
