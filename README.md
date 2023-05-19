@@ -28,6 +28,7 @@ $ npm run build
 $ npm publish .
 ```
 
+
 ### 安装 O2T CLI
 
 ```shell
@@ -46,12 +47,12 @@ $ o2t --url <OPEN_API_DATA_URL> --name <GENERATED_FILE_NAME>
 执行 CLI 后会得到 `npm i @types/<GENERATED_FILE_NAME>@1.0.0-<TIMESTAMP> -D` 提示，在项目中安装即可。
 
 
-Apifox 暂时不支持提供公开 API，目前只提供本地启动 Apifox ，然后使用它创建的本地服务器接口获取数据，所以暂时无法通过将程序部署到云端，待公开 API 开放就可以整合到[钉钉机器人](https://github.com/ShiverZheng/Y2T-Robot)中。
+Apifox 暂时不支持提供公开 API，目前只提供本地启动 Apifox ，然后使用它创建的本地服务器接口获取数据，所以暂时无法通过将程序部署到云端，待公开 API 开放就可以整合到[钉钉机器人](https://github.com/sivanzheng/Y2T-Robot)中。
 
 
 ## 实现
 
-具体实现和底层算法与 Y2T 相似，使用 Tire 实现，可以参考 Y2T 的 [README.md](https://github.com/ShiverZheng/Y2T#y2t)。
+具体实现和底层算法与 Y2T 相似，使用 Tire 实现，可以参考 Y2T 的 [README.md](https://github.com/sivanzheng/Y2T#y2t)。
 
 Apifox 提供的数据定义大致如下：
 ```typescript
