@@ -1,5 +1,9 @@
 import toCamelCase from '../utils/toCamelCase'
-import { TireSeedContent, TIRE_ROOT, NodeType } from '../models'
+import {
+	TireSeedContent,
+	TIRE_ROOT,
+	NodeType,
+} from '../types'
 
 export default class TireNode {
 	public part: string

@@ -1,6 +1,12 @@
 import { compile, JSONSchema } from 'json-schema-to-typescript'
 import { formatPath } from '../utils'
-import { TIRE_ROOT, TireSeed, NodeType, TOP_LEVEL_NAMESPACE } from '../models'
+import {
+	TIRE_ROOT,
+	TireSeed,
+	NodeType,
+	TOP_LEVEL_NAMESPACE,
+} from '../types'
+
 import TireNode from './TireNode'
 
 const compiler = async (schema: JSONSchema) => {
@@ -13,6 +19,7 @@ const compiler = async (schema: JSONSchema) => {
 			bannerComment: '',
 			unknownAny: true,
 			format: false,
+			declareExternallyReferenced: true,
 		}
 	)
 	return result.replace('export ', '')
@@ -20,7 +27,7 @@ const compiler = async (schema: JSONSchema) => {
 
 const printParentNode = async (node: TireNode) => {
 	const parent = `namespace ${node.part} { `
-		+ await printChildNode(node, true) 
+		+ await printChildNode(node, true)
 		+ await printChildren(node)
 		+ ' }'
 	return parent
@@ -29,7 +36,7 @@ const printParentNode = async (node: TireNode) => {
 const printChildNode = async (node: TireNode, hasWrapper = false) => {
 	let row = ''
 	if (!node.content) return ''
-	if(node.content.params) {
+	if (node.content.params) {
 		const compiled = await compiler(node.content.params)
 		row += compiled + ';'
 	}
@@ -47,12 +54,12 @@ const printChildNode = async (node: TireNode, hasWrapper = false) => {
 	if (!hasWrapper) {
 		row = `namespace ${node.part} \{ ${row} \};`
 	}
-	
+
 	const child = `
 	\/\*\*
 	 \* \@description Response Interface
 	 \* \@method ${node.content.method}
-	 \* \@path ${node.path || '' }
+	 \* \@path ${node.path || ''}
 	 \*\/
 	${row}
 	`
@@ -81,7 +88,7 @@ const printChildren = async (node: TireNode) => {
 const printNode = async (node: TireNode) => {
 	if (node.type === NodeType.PARENT_NODE) return await printParentNode(node)
 	if (node.type === NodeType.CHILD_NODE) return await printChildNode(node)
-	if (node.type === NodeType.NAMESPACE) return await printNamespace(node) 
+	if (node.type === NodeType.NAMESPACE) return await printNamespace(node)
 	if (node.type === NodeType.ROOT) return await printChildren(node)
 	return ''
 }
@@ -116,7 +123,7 @@ export default class Tire {
 			this.result = `
 				/* eslint-disable */
 				${await printNode(node)}
-			` 
+			`
 		}
 	}
 

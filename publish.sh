@@ -1,13 +1,7 @@
 DIR=$(cd `dirname $0`; pwd)
 
-if [ "$NS" = "dev" ]
-then 
-    FILE="/usr/src/app/generated/index.d.ts"
-    GENERATED="/usr/src/app/generated"
-else 
-    FILE="$DIR/generated/index.d.ts"
-    GENERATED="$DIR/generated"
-fi
+FILE="$DIR/generated/index.d.ts"
+GENERATED="$DIR/generated"
 
 if [ -f "$FILE" ]
 then

@@ -13,15 +13,14 @@
   ],
   "scripts": {
     "dev": "npm run build && node lib/index.js",
-    "build": "rm -rf lib && mkdir lib && tsc",
-    "ci": "npm run build",
-    "start:docker": "node lib/index.js"
+    "build": "rm -rf lib && mkdir lib && tsc"
   },
   "keywords": [
-    "apifox-cli",
-    "openApi-generator",
-    "typescript-generator",
-    "trie-tree"
+    "apifox",
+    "OpenAPI",
+    "typescript generator",
+    "tire tree",
+    "swagger"
   ],
   "author": "Sivan Zheng",
   "license": "MIT",

@@ -1,5 +1,6 @@
 export const REGISTRY = ''
-export const USERNAME = ''
+export const USER_NAME = ''
 export const PASSWORD = ''
 export const EMAIL = ''
 export const AUTHOR = ''
+export const PACKAGE_NAME_PREFIX = ''
