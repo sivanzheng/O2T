@@ -44,7 +44,7 @@ const generateAll = async (rawData: string, apiStatus: APIStatus[]) => {
 	return formatted
 }
 
-const generateIncremental = async (
+const generateDifferentiation = async (
 	newestRawData: string,
 	historyRawData: string,
 	apiStatus: APIStatus[]
@@ -163,7 +163,7 @@ const generate = async (url: string, fileName: string, apiStatus: APIStatus[]) =
 	let generateResult = ''
 	if (updateList.length) {
 		const historyRawData = getHistoryRawDataFormLocal(fileName)
-		generateResult = await generateIncremental(newestRawData, historyRawData, apiStatus)
+		generateResult = await generateDifferentiation(newestRawData, historyRawData, apiStatus)
 	} else {
 		generateResult = await generateAll(newestRawData,apiStatus)
 	}
