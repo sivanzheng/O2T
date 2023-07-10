@@ -16,6 +16,7 @@ Apifox CLI (OpenApi schema to TypeScript)
 - **USERNAME**: NPM 登录用户名
 - **PASSWORD**: NPM 登录密码
 - **EMAIL**:    NPM 注册邮箱
+- **PACKAGE_NAME_PREFIX**: 生成文件的包名前缀
 - **AUTHOR**:   自动生成文件的作者（可选）
 
 ### 编译
@@ -36,23 +37,28 @@ $ npm i o2t -g
 ```
 
 ### 使用
+在项目根目录下执行
+
+#### 差异化生成
+在项目根目录创建 `.o2t` 文件，逐行键入需要被更新的 api path
+
+#### 全量生成
+清空或移除 `.o2t` 文件
+
 ```shell
 $ o2t --url <OPEN_API_DATA_URL> --name <GENERATED_FILE_NAME>
 
 # -u,  --url        URL of OpenApi
 # -n,  --name       Name for Generated file
+# -s,  --status     Determine which api will be generated based on status
+# status: developing | testing | released | deprecated
 ```
-> URL 在【接口管理】-【项目概览】-【代码生成】-【立即生成】中可以获取
-
-执行 CLI 后会得到 `npm i @types/<GENERATED_FILE_NAME>@1.0.0-<TIMESTAMP> -D` 提示，在项目中安装即可。
-
-
-Apifox 暂时不支持提供公开 API，目前只提供本地启动 Apifox ，然后使用它创建的本地服务器接口获取数据，所以暂时无法通过将程序部署到云端，待公开 API 开放就可以整合到[钉钉机器人](https://github.com/sivanzheng/Y2T-Robot)中。
+执行 o2t 后会自动将生成的类型包`<PACKAGE_NAME_PREFIX>/<GENERATED_FILE_NAME>@1.0.0-<TIMESTAMP>`安装到项目。
 
 
 ## 实现
 
-具体实现和底层算法与 Y2T 相似，使用 Tire 实现，可以参考 Y2T 的 [README.md](https://github.com/sivanzheng/Y2T#y2t)。
+具体实现和底层算法与 Y2T 相似，使用 Tire 实现，可以参考 Y2T 的 [README](https://github.com/sivanzheng/Y2T#y2t)。
 
 Apifox 提供的数据定义大致如下：
 ```typescript
@@ -118,4 +124,4 @@ export interface ApiFoxData {
 
 对数据进行一定的预处理后，转换成 `TireSeed` 需要的数据格式，然后使用 [json-schema-to-typescript](https://github.com/bcherny/json-schema-to-typescript#readme) 将模型转换成 ts 接口。
 
-与 YApi 不同的是 Apifox 提供的数据是基于 OpenApi 的标准，然后添加了一些自定义的字段产生的，所以剔除这些自定义字段之后就能得到 OpenApi 的数据，所以 O2T 理论上兼容所有符合 OpenApi 标准的数据转换，同时得益于 OpenApi 底层使用 JSONSchema ，所以 O2T 可以支持枚举类型的生成了。
+与 YApi 不同的是 Apifox 提供的数据是基于 OpenApi 的标准，然后添加了一些自定义的字段产生的，所以剔除这些自定义字段之后就能得到 OpenApi 的数据，所以 O2T 理论上兼容所有符合 OpenApi 标准的数据转换，同时得益于 OpenApi 底层使用 JSONSchema ，所以 O2T 可以支持枚举类型的生成。

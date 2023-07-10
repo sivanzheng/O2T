@@ -1,6 +1,6 @@
-import { ApifoxSchema } from '../models'
+import { ApiFoxSchema } from '../types'
 
-const deleteUselessProperty = (schema: ApifoxSchema) => {
+const deleteUselessProperty = (schema: ApiFoxSchema) => {
 	delete schema['x-apifox']
 	delete schema['x-apifox-orders']
 	delete schema['x-apifox-ignore-properties']
