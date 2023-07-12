@@ -1,6 +1,7 @@
 import { JSONSchema } from 'json-schema-to-typescript'
 
-import { deleteUselessProperty, firstLetterToUpperCase } from '../utils'
+import deleteUselessProperty from '../utils/deleteUselessProperty'
+import firstLetterToUpperCase from '../utils/firstLetterToUpperCase'
 import {
 	ApiFoxData,
 	APIStatus,

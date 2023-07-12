@@ -47,31 +47,43 @@ const generateAll = async (rawData: string, apiStatus: APIStatus[]) => {
 const generateDifferentiation = async (
 	newestRawData: string,
 	historyRawData: string,
+	updateList: string[],
 	apiStatus: APIStatus[]
 ) => {
-
-	const updateList = getUpdateList()
 	const historyTireSeeds = apifoxDataToTireSeed(JSON.parse(historyRawData), apiStatus)
 
 	const newestTireSeeds = apifoxDataToTireSeed(JSON.parse(newestRawData), apiStatus)
-	const seedMap = new Map<string, TireSeed>()
+	const newestSeedMap = new Map<string, TireSeed>()
 	for (const seed of newestTireSeeds) {
-		seedMap.set(seed.originalPath, seed)
+		newestSeedMap.set(seed.originalPath, seed)
 	}
 
+	const updatePathsSet = new Set<string>(updateList)
+
 	const tire = new Tire()
-	for (const seed of historyTireSeeds) {
-		if (updateList.includes(seed.originalPath)) {
-			const newestSeed = seedMap.get(seed.originalPath)
+	for (const historySeed of historyTireSeeds) {
+		if (updateList.includes(historySeed.originalPath)) {
+			const newestSeed = newestSeedMap.get(historySeed.originalPath)
 			if (!newestSeed) {
-				console.log('\x1b[31m%s\x1b[0m', `Error: Can not find the raw data of ${seed.originalPath})`)
-				tire.insert(seed)
+				console.log('\x1b[31m%s\x1b[0m', `Error: Can not find the raw data of ${historySeed.originalPath})`)
+				tire.insert(historySeed)
 			} else {
 				tire.insert(newestSeed)
 			}
 		} else {
-			tire.insert(seed)
+			tire.insert(historySeed)
 		}
+		updatePathsSet.delete(historySeed.originalPath)
+	}
+	for (const path of updatePathsSet) {
+		const seed = newestSeedMap.get(path)
+		if (seed) {
+			tire.insert(seed)
+			updatePathsSet.delete(seed.originalPath)
+		}
+	}
+	if (updatePathsSet.size) {
+		console.log('\x1b[31m%s\x1b[0m', `Error: Can not find the raw data of ${Array.from(updatePathsSet).join(', ')}`)
 	}
 	const result = await tire.build()
 	const formatted = prettier.format(result, { parser: 'babel-ts' })
@@ -163,7 +175,7 @@ const generate = async (url: string, fileName: string, apiStatus: APIStatus[]) =
 	let generateResult = ''
 	if (updateList.length) {
 		const historyRawData = getHistoryRawDataFormLocal(fileName)
-		generateResult = await generateDifferentiation(newestRawData, historyRawData, apiStatus)
+		generateResult = await generateDifferentiation(newestRawData, historyRawData, updateList, apiStatus)
 	} else {
 		generateResult = await generateAll(newestRawData,apiStatus)
 	}

@@ -1,5 +1,5 @@
 import { compile, JSONSchema } from 'json-schema-to-typescript'
-import { formatPath } from '../utils'
+import formatPath from '../utils/formatPath'
 import {
 	TIRE_ROOT,
 	TireSeed,
